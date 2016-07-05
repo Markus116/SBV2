@@ -1,0 +1,67 @@
+Header Button{
+    skinClass: ClassReference("com.sampleboardonline.ui.skins.buttons.ImageButtonSkin");
+}
+
+.openButton{
+    skinClass: ClassReference("com.sampleboardonline.ui.skins.buttons.ImageButtonSkin");
+    upImage: Embed(source="../../assets/header/openmain.png");
+    downImage: Embed(source="../../assets/header/openmain_over.png");
+    overImage: Embed(source="../../assets/header/openmain_over.png");
+    disabledImage: Embed(source="../../assets/header/openmain.png");
+}
+
+.newBoardButton{
+    skinClass: ClassReference("com.sampleboardonline.ui.skins.buttons.ImageButtonSkin");
+    upImage: Embed(source="../../assets/header/newmain.png");
+    downImage: Embed(source="../../assets/header/newmain_over.png");
+    overImage: Embed(source="../../assets/header/newmain_over.png");
+    disabledImage: Embed(source="../../assets/header/newmain.png");
+}
+
+.saveAsButton{
+    skinClass: ClassReference("com.sampleboardonline.ui.skins.buttons.ImageButtonSkin");
+    upImage: Embed(source="../../assets/header/saveasmain.png");
+    downImage: Embed(source="../../assets/header/saveasmain_over.png");
+    overImage: Embed(source="../../assets/header/saveasmain_over.png");
+    disabledImage: Embed(source="../../assets/header/saveasmain.png");
+}
+
+.saveButton{
+    skinClass: ClassReference("com.sampleboardonline.ui.skins.buttons.ImageButtonSkin");
+    upImage: Embed(source="../../assets/header/savemain.png");
+    downImage: Embed(source="../../assets/header/savemain_open.png");
+    overImage: Embed(source="../../assets/header/savemain_open.png");
+    disabledImage: Embed(source="../../assets/header/savemain.png");
+}
+
+.exportButton{
+    skinClass: ClassReference("com.sampleboardonline.ui.skins.buttons.ImageButtonSkin");
+    upImage: Embed(source="../../assets/header/exportmain.png");
+    downImage: Embed(source="../../assets/header/exportmain_over.png");
+    overImage: Embed(source="../../assets/header/exportmain_over.png");
+    disabledImage: Embed(source="../../assets/header/exportmain.png");
+}
+
+.printButton{
+    skinClass: ClassReference("com.sampleboardonline.ui.skins.buttons.ImageButtonSkin");
+    upImage: Embed(source="../../assets/header/printmain.png");
+    downImage: Embed(source="../../assets/header/printmain_over.png");
+    overImage: Embed(source="../../assets/header/printmain_over.png");
+    disabledImage: Embed(source="../../assets/header/printmain.png");
+}
+
+.openMenuButton{
+    skinClass: ClassReference("com.sampleboardonline.ui.skins.buttons.ImageButtonSkin");
+    upImage: Embed(source="../../assets/header/openmenu.png");
+    downImage: Embed(source="../../assets/header/openmenu_over.png");
+    overImage: Embed(source="../../assets/header/openmenu_over.png");
+    disabledImage: Embed(source="../../assets/header/openmenu.png");
+}
+
+.closeMenuButton{
+    skinClass: ClassReference("com.sampleboardonline.ui.skins.buttons.ImageButtonSkin");
+    upImage: Embed(source="../../assets/header/closemenu.png");
+    downImage: Embed(source="../../assets/header/closemenu_over.png");
+    overImage: Embed(source="../../assets/header/closemenu_over.png");
+    disabledImage: Embed(source="../../assets/header/closemenu.png");
+}

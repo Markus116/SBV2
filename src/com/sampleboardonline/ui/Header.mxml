@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009"
+         xmlns:s="library://ns.adobe.com/flex/spark">
+
+    <s:Rect id="backgroundRect" left="0" right="0" top="0" bottom="0">
+        <s:fill>
+            <s:BitmapFill source="{HeaderAssets.IMG_BG}" fillMode="repeat" />
+        </s:fill>
+    </s:Rect>
+
+    <s:HGroup width="100%" height="100%" gap="5"
+              verticalAlign="middle" horizontalAlign="left">
+
+        <s:Image source="{HeaderAssets.IMG_LOGO}" verticalCenter="0"/>
+        <s:Button styleName="newBoardButton" buttonMode="true"/>
+        <s:Button styleName="openButton" buttonMode="true"/>
+        <s:Button styleName="saveButton" buttonMode="true"/>
+        <s:Button styleName="saveAsButton" buttonMode="true"/>
+        <s:Button styleName="exportButton" buttonMode="true"/>
+        <s:Button styleName="printButton" buttonMode="true"/>
+
+    </s:HGroup>
+
+    <fx:Script><![CDATA[
+        import assets.header.HeaderAssets;
+        ]]></fx:Script>
+</s:Group>

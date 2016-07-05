@@ -1,11 +1,14 @@
 package com.sampleboardonline.model.models {
-import com.sampleboardonline.model.vo.ProjectVO;
+	import com.greensock.transform.TransformManager;
+	import com.sampleboardonline.model.vo.ProjectVO;
 
 [Bindable]
 public class MainModel {
 
 	public var projectZoom:Number = 1;
-	public var projectVO:ProjectVO = new ProjectVO("AAAAA");
+	public var projectVO:ProjectVO;
+
+	public var transformManager:TransformManager;
 
 	private static var _instance:MainModel;
 	public static function get instance():MainModel {

@@ -3,16 +3,34 @@
         xmlns:fx="http://ns.adobe.com/mxml/2009"
         xmlns:s="library://ns.adobe.com/flex/spark" xmlns:ui="com.sampleboardonline.ui.*">
 
-
     <fx:Script>
         <![CDATA[
+        import com.sampleboardonline.model.enum.ItemTypeEnum;
+        import com.sampleboardonline.model.models.MainModel;
         import com.sampleboardonline.model.models.RightPanelModel;
+        import com.sampleboardonline.model.vo.CanvasItemVO;
+        import com.sampleboardonline.model.vo.PageVO;
+        import com.sampleboardonline.model.vo.ProjectVO;
 
         [Bindable]
         public var rightPanelModel:RightPanelModel = RightPanelModel.instance;
 
+        [Bindable]
+        public var mainModel:MainModel = MainModel.instance;
+
         private function changeRPVisibilityClickHandler(event:MouseEvent):void {
             rightPanelModel.isPanelVisible = !rightPanelModel.isPanelVisible;
+        }
+
+        private function createNewProjectHandler(event:MouseEvent):void {
+            var project:ProjectVO = new ProjectVO("AAAAA");
+            project.page = new PageVO("AA",600,400);
+            var item:CanvasItemVO = new CanvasItemVO("aaa",ItemTypeEnum.IMAGE);
+            item.canvasGeometry.x = Math.random()*500;
+            item.canvasGeometry.y = Math.random()*300;
+            item.source = "http://media.caranddriver.com/images/media/51/2016-10best-cars-lead-photo-664005-s-original.jpg";
+            project.items.addItem(item);
+            mainModel.projectVO = project;
         }
         ]]>
     </fx:Script>
@@ -22,10 +40,10 @@
                 id="showHideRP"
                 target="{rightPanelColumn}"
                 duration="1000"
-                widthFrom="{rightPanelModel.isPanelVisible ? 20 : 435}"
-                widthTo="{rightPanelModel.isPanelVisible ? 435 : 20}"
-                heightFrom="{rightPanelModel.isPanelVisible ? 20 : mainRow.height}"
-                heightTo="{rightPanelModel.isPanelVisible ? mainRow.height : 20}"/>
+                widthFrom="{rightPanelModel.isPanelVisible ? showCloseRPButton.width : 300}"
+                widthTo="{rightPanelModel.isPanelVisible ? 300 : showCloseRPButton.width}"
+                heightFrom="{rightPanelModel.isPanelVisible ? showCloseRPButton.height : mainRow.height}"
+                heightTo="{rightPanelModel.isPanelVisible ? mainRow.height : showCloseRPButton.height}"/>
     </fx:Declarations>
 
     <s:layout>
@@ -37,7 +55,7 @@
             </s:constraintColumns>
 
             <s:constraintRows>
-                <s:ConstraintRow id="headerPanelRow" height="60"/>
+                <s:ConstraintRow id="headerPanelRow" height="71"/>
                 <s:ConstraintRow id="mainRow" height="100%"/>
             </s:constraintRows>
         </s:ConstraintLayout>
@@ -45,11 +63,7 @@
 
     <s:Group left="leftPanelColumn:0" right="rightPanelColumn:0"
              top="headerPanelRow:0" bottom="headerPanelRow:0">
-        <s:Rect width="100%" height="100%">
-            <s:fill>
-                <s:SolidColor color="0x808080"/>
-            </s:fill>
-        </s:Rect>
+        <ui:Header width="100%" height="100%"/>
     </s:Group>
 
     <s:Group left="leftPanelColumn:0" right="leftPanelColumn:0"
@@ -60,7 +74,9 @@
     <s:Group left="mainColumn:0" right="mainColumn:0"
              top="mainRow:0" bottom="mainRow:0"
              clipAndEnableScrolling="true">
-        <ui:CanvasContainer width="100%" height="100%"/>
+        <ui:CanvasContainer width="100%" height="100%"
+                projectVO="{mainModel.projectVO}"
+                zoom="{mainModel.projectZoom}"/>
         <ui:ZoomContainer bottom="0" width="100%"/>
     </s:Group>
 
@@ -68,7 +84,7 @@
             id="rightPanel"
             left="rightPanelColumn:0" right="rightPanelColumn:0"
             top="mainRow:0"
-            width="435" height="100%"
+            width="300" height="100%"
             hideEffect="{showHideRP}" showEffect="{showHideRP}"
             visible="{rightPanelModel.isPanelVisible}">
         <s:Rect width="100%" height="100%">
@@ -78,8 +94,10 @@
         </s:Rect>
     </s:Group>
 
-    <s:Button width="20" height="20"
-              right="rightPanelColumn:0" top="mainRow:0"
-              click="changeRPVisibilityClickHandler(event)"/>
+    <s:Button
+            id="showCloseRPButton"
+            styleName="{rightPanelModel.isPanelVisible ? 'closeMenuButton' : 'openMenuButton'}"
+            right="rightPanelColumn:0" top="mainRow:0"
+            click="changeRPVisibilityClickHandler(event)"/>
 
 </s:Group>

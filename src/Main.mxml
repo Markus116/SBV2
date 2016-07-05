@@ -8,6 +8,8 @@
 
     ]]></fx:Script>
 
+    <fx:Style source="com/styles/buttons.css"/>
+
     <ui:MainContainer width="100%" height="100%"/>
 
 </s:Application>

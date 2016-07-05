@@ -1,6 +1,7 @@
 package com.sampleboardonline.model.vo {
 import mx.collections.ArrayCollection;
 
+[Bindable]
 public class ProjectVO extends BaseIdVO {
 
 	public var page:PageVO;

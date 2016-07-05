@@ -1,13 +1,111 @@
 <?xml version="1.0"?>
 <s:Group
         xmlns:fx="http://ns.adobe.com/mxml/2009"
-        xmlns:s="library://ns.adobe.com/flex/spark">
+        xmlns:s="library://ns.adobe.com/flex/spark" xmlns:component="com.sampleboardonline.ui.component.*"
+        xmlns:mx="library://ns.adobe.com/flex/mx">
 
         <fx:Script><![CDATA[
+            import com.greensock.transform.TransformItem;
+            import com.greensock.transform.TransformManager;
+            import com.sampleboardonline.controller.events.BaseEvent;
+            import com.sampleboardonline.model.enum.ItemTypeEnum;
             import com.sampleboardonline.model.models.MainModel;
+            import com.sampleboardonline.model.vo.CanvasItemVO;
+            import com.sampleboardonline.model.vo.ProjectVO;
+            import com.sampleboardonline.ui.renderer.canvasRenderer.BaseCanvasRenderer;
+            import com.sampleboardonline.ui.renderer.canvasRenderer.ImageItemRenderer;
+            import com.sampleboardonline.ui.renderer.canvasRenderer.ShapeItemRenderer;
+            import com.sampleboardonline.ui.renderer.canvasRenderer.TextItemRenderer;
+
+            import flash.display.DisplayObject;
+
+            import spark.events.RendererExistenceEvent;
+
+            public static const PROJECTVO_CHANGED_EVENT:String = "projectVOChanged";
+            public static const ZOOM_CHANGED_EVENT:String = "zoomChanged";
+
+            public static const DRAWING_LAYER_OFFSET:Number = 400;
 
             [Bindable]
             private var mainModel:MainModel = MainModel.instance;
+
+            private var _projectVO:ProjectVO;
+            [Bindable(event="projectVOChanged")]
+            public function get projectVO():ProjectVO {
+                return _projectVO;
+            }
+
+            public function set projectVO(value:ProjectVO):void {
+                if (_projectVO == value) return;
+                initTransformManager(value);
+                _projectVO = value;
+                dispatchEvent(new Event(PROJECTVO_CHANGED_EVENT));
+            }
+
+            private var _zoom:Number = 1;
+            [Bindable(event="zoomChanged")]
+            public function get zoom():Number {
+                return _zoom;
+            }
+
+            public function set zoom(value:Number):void {
+                if (_zoom == value) return;
+                _zoom = value;
+                dispatchEvent(new Event(ZOOM_CHANGED_EVENT));
+            }
+
+            private function initTransformManager(_projectVO:ProjectVO):void {
+                if (mainModel.transformManager) {
+                    mainModel.transformManager.removeAllItems();
+                    mainModel.transformManager.destroy();
+                }
+                if(!_projectVO){
+                    return;
+                }
+
+                var managerBounds:Rectangle =
+                        new Rectangle(-DRAWING_LAYER_OFFSET, -DRAWING_LAYER_OFFSET,
+                                2 * DRAWING_LAYER_OFFSET + _projectVO.page.width,
+                                2 * DRAWING_LAYER_OFFSET + _projectVO.page.height);
+
+                mainModel.transformManager = new TransformManager({
+                    targetObjects: [],
+                    bounds: managerBounds,
+                    forceSelectionToFront: true,
+                    allowDelete: true,
+                    arrowKeysMove: true
+                });
+
+                mainModel.transformManager.handleFillColor = 0xFFFFFF;
+                mainModel.transformManager.lineColor = 0x777777;
+                mainModel.transformManager.allowMultiSelect = false;
+                mainModel.transformManager.autoDeselect = false;
+            }
+
+            private function itemRendererFunction(item:CanvasItemVO):ClassFactory {
+                switch (item.type) {
+                    case ItemTypeEnum.TEXT:
+                        return new ClassFactory(TextItemRenderer);
+                    case ItemTypeEnum.IMAGE:
+                        return new ClassFactory(ImageItemRenderer);
+                    case ItemTypeEnum.SHAPE:
+                        return new ClassFactory(ShapeItemRenderer);
+                    default:
+                        return null;
+                }
+            }
+
+            private function onRendererAdd(event:BaseEvent):void {
+                if (event.data is BaseCanvasRenderer) {
+                    mainModel.transformManager.addItem(DisplayObject(event.data), TransformManager.SCALE_WIDTH_AND_HEIGHT);
+                }
+            }
+
+            private function onRendererRemove(event:BaseEvent):void {
+                if (event.data is BaseCanvasRenderer) {
+                    mainModel.transformManager.removeItem(DisplayObject(event.data));
+                }
+            }
             ]]></fx:Script>
 
     <s:Rect width="100%" height="100%">
@@ -16,11 +114,14 @@
         </s:fill>
     </s:Rect>
 
-    <s:Group width="{mainModel.projectVO.page.width}"
-             height="{mainModel.projectVO.page.height}"
-             scaleX="{mainModel.projectZoom}"
-             scaleY="{mainModel.projectZoom}"
-             verticalCenter="0" horizontalCenter="0">
+    <s:Group
+            visible="{projectVO!=null}"
+            width="{projectVO.page.width}"
+            height="{projectVO.page.height}"
+            scaleX="{zoom}"
+            scaleY="{zoom}"
+            verticalCenter="0" horizontalCenter="0">
+
         <s:Rect width="100%" height="100%">
             <s:fill>
                 <s:SolidColor color="white"/>
@@ -30,12 +131,20 @@
             </s:stroke>
         </s:Rect>
 
-        <s:DataGroup
-                width="100%" height="100%"
-                dataProvider="{mainModel.projectVO.items}"
-                itemRendererFunction="">
 
-        </s:DataGroup>
+        <component:DrawingDataGroup
+                width="100%" height="100%"
+                clipContent="true"
+                holder="{holderGroup}"
+                childAdded="onRendererAdd(event)"
+                childRemoved="onRendererRemove(event)"
+                verticalScrollPolicy="off"
+                horizontalScrollPolicy="off"
+                itemRendererFunction="itemRendererFunction"
+                dataProvider="{mainModel.projectVO.items}">
+        </component:DrawingDataGroup>
+
+        <mx:UIComponent id="holderGroup" width="100%" height="100%"/>
 
     </s:Group>
 
