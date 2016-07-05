@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<s:Group
+        xmlns:fx="http://ns.adobe.com/mxml/2009"
+        xmlns:s="library://ns.adobe.com/flex/spark"
+        xmlns:containers="spark.containers.*" xmlns:component="com.sampleboardonline.ui.component.*">
+
+    <fx:Script><![CDATA[
+        import com.sampleboardonline.model.models.LeftPanelModel;
+
+        [Bindable]
+        private var leftPanelModel:LeftPanelModel = LeftPanelModel.instance;
+        ]]></fx:Script>
+
+    <containers:Accordion
+            skinClass="com.sampleboardonline.ui.skins.LPAccordionSkin"
+            width="100%" height="100%"
+            duration="500" direction="vertical"
+            selectedIndex="@{leftPanelModel.selectedIndex}">
+        <s:NavigatorContent width="100%" height="100%" label="Templates"
+                            backgroundColor="0x646464">
+            <component:BaseLPContainer width="100%" height="600">
+            </component:BaseLPContainer>
+        </s:NavigatorContent>
+
+        <s:NavigatorContent width="100%" height="100%" label="Basic Edits"
+                            backgroundColor="0x646464">
+            <component:BaseLPContainer width="100%" height="600">
+            </component:BaseLPContainer>
+        </s:NavigatorContent>
+
+        <s:NavigatorContent width="100%" height="100%" label="Image Effects"
+                            backgroundColor="0x646464">
+            <component:BaseLPContainer width="100%" height="600">
+            </component:BaseLPContainer>
+        </s:NavigatorContent>
+
+
+        <s:NavigatorContent width="100%" height="100%" label="Filter Effects"
+                            backgroundColor="0x646464">
+            <component:BaseLPContainer width="100%" height="600">
+            </component:BaseLPContainer>
+        </s:NavigatorContent>
+
+    </containers:Accordion>
+</s:Group>

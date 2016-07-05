@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<s:Group
+        xmlns:fx="http://ns.adobe.com/mxml/2009"
+        xmlns:s="library://ns.adobe.com/flex/spark" xmlns:ui="com.sampleboardonline.ui.*">
+
+
+    <fx:Script>
+        <![CDATA[
+        import com.sampleboardonline.model.models.RightPanelModel;
+
+        [Bindable]
+        public var rightPanelModel:RightPanelModel = RightPanelModel.instance;
+
+        private function changeRPVisibilityClickHandler(event:MouseEvent):void {
+            rightPanelModel.isPanelVisible = !rightPanelModel.isPanelVisible;
+        }
+        ]]>
+    </fx:Script>
+
+    <fx:Declarations>
+        <s:Resize
+                id="showHideRP"
+                target="{rightPanelColumn}"
+                duration="1000"
+                widthFrom="{rightPanelModel.isPanelVisible ? 20 : 435}"
+                widthTo="{rightPanelModel.isPanelVisible ? 435 : 20}"
+                heightFrom="{rightPanelModel.isPanelVisible ? 20 : mainRow.height}"
+                heightTo="{rightPanelModel.isPanelVisible ? mainRow.height : 20}"/>
+    </fx:Declarations>
+
+    <s:layout>
+        <s:ConstraintLayout>
+            <s:constraintColumns>
+                <s:ConstraintColumn id="leftPanelColumn" width="225"/>
+                <s:ConstraintColumn id="mainColumn" width="100%"/>
+                <s:ConstraintColumn id="rightPanelColumn" width="{rightPanel.width}"/>
+            </s:constraintColumns>
+
+            <s:constraintRows>
+                <s:ConstraintRow id="headerPanelRow" height="60"/>
+                <s:ConstraintRow id="mainRow" height="100%"/>
+            </s:constraintRows>
+        </s:ConstraintLayout>
+    </s:layout>
+
+    <s:Group left="leftPanelColumn:0" right="rightPanelColumn:0"
+             top="headerPanelRow:0" bottom="headerPanelRow:0">
+        <s:Rect width="100%" height="100%">
+            <s:fill>
+                <s:SolidColor color="0x808080"/>
+            </s:fill>
+        </s:Rect>
+    </s:Group>
+
+    <s:Group left="leftPanelColumn:0" right="leftPanelColumn:0"
+             top="mainRow:0" bottom="mainRow:0">
+        <ui:LeftPanel width="100%" height="100%"/>
+    </s:Group>
+
+    <s:Group left="mainColumn:0" right="mainColumn:0"
+             top="mainRow:0" bottom="mainRow:0"
+             clipAndEnableScrolling="true">
+        <ui:CanvasContainer width="100%" height="100%"/>
+        <ui:ZoomContainer bottom="0" width="100%"/>
+    </s:Group>
+
+    <s:Group
+            id="rightPanel"
+            left="rightPanelColumn:0" right="rightPanelColumn:0"
+            top="mainRow:0"
+            width="435" height="100%"
+            hideEffect="{showHideRP}" showEffect="{showHideRP}"
+            visible="{rightPanelModel.isPanelVisible}">
+        <s:Rect width="100%" height="100%">
+            <s:fill>
+                <s:SolidColor color="green"/>
+            </s:fill>
+        </s:Rect>
+    </s:Group>
+
+    <s:Button width="20" height="20"
+              right="rightPanelColumn:0" top="mainRow:0"
+              click="changeRPVisibilityClickHandler(event)"/>
+
+</s:Group>

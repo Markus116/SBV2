@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<s:Group
+        xmlns:fx="http://ns.adobe.com/mxml/2009"
+        xmlns:s="library://ns.adobe.com/flex/spark"
+        height="40">
+
+    <fx:Script><![CDATA[
+        import com.sampleboardonline.model.models.MainModel;
+        ]]>
+    </fx:Script>
+
+    <s:HSlider width="200" verticalCenter="0" left="10"
+               stepSize="0.1"
+               minimum="0.5" maximum="1.5" value="@{MainModel.instance.projectZoom}"/>
+</s:Group>
