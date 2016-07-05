@@ -2,7 +2,8 @@
 <s:Group
         xmlns:fx="http://ns.adobe.com/mxml/2009"
         xmlns:s="library://ns.adobe.com/flex/spark"
-        xmlns:containers="spark.containers.*" xmlns:component="com.sampleboardonline.ui.component.*">
+        xmlns:containers="spark.containers.*"
+        xmlns:component="com.sampleboardonline.ui.component.*" xmlns:ui="com.sampleboardonline.ui.*">
 
     <fx:Script><![CDATA[
         import com.sampleboardonline.model.models.LeftPanelModel;
@@ -15,6 +16,7 @@
             skinClass="com.sampleboardonline.ui.skins.LPAccordionSkin"
             width="100%" height="100%"
             duration="500" direction="vertical"
+            change=""
             selectedIndex="@{leftPanelModel.selectedIndex}">
         <s:NavigatorContent width="100%" height="100%" label="Templates"
                             backgroundColor="0x646464">
@@ -37,8 +39,7 @@
 
         <s:NavigatorContent width="100%" height="100%" label="Filter Effects"
                             backgroundColor="0x646464">
-            <component:BaseLPContainer width="100%" height="600">
-            </component:BaseLPContainer>
+            <ui:FilterEffectsPanel width="100%" height="400"/>
         </s:NavigatorContent>
 
     </containers:Accordion>

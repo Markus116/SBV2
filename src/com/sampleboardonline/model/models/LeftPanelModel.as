@@ -4,6 +4,7 @@ package com.sampleboardonline.model.models {
 public class LeftPanelModel {
 
 	public var selectedIndex:int = 0;
+	public var filtersEffectsIndex:int = 0;
 
 	private static var _instance:LeftPanelModel;
 	public static function get instance():LeftPanelModel {

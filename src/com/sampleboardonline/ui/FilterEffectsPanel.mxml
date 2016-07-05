@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<component:BaseLPContainer
+        xmlns:fx="http://ns.adobe.com/mxml/2009"
+        xmlns:s="library://ns.adobe.com/flex/spark"
+        xmlns:component="com.sampleboardonline.ui.component.*">
+
+
+    <fx:Script><![CDATA[
+        import assets.leftpanel.LeftPanelAssets;
+
+        import com.sampleboardonline.model.models.LeftPanelModel;
+
+        [Bindable]
+        private var leftPanelModel:LeftPanelModel = LeftPanelModel.instance;
+
+        private function updateSelectedIndex(index:Number):void {
+            leftPanelModel.filtersEffectsIndex = leftPanelModel.filtersEffectsIndex == index ? -1 : index;
+        }
+        ]]></fx:Script>
+
+    <s:VGroup width="100%" gap="0">
+        <component:LPItemContainer
+                width="100%"
+                click="updateSelectedIndex(0)"
+                index="0" label="Black and white"
+                openedSource="{LeftPanelAssets.IMG_BLACK_WHITE_OPENED}"
+                closedSource="{LeftPanelAssets.IMG_BLACK_WHITE}"/>
+
+        <component:LPItemContainer
+                width="100%"
+                click="updateSelectedIndex(1)"
+                index="1" label="Black and white"
+                openedSource="{LeftPanelAssets.IMG_BLACK_WHITE_OPENED}"
+                closedSource="{LeftPanelAssets.IMG_BLACK_WHITE}"/>
+
+        <component:LPItemContainer
+                width="100%"
+                click="updateSelectedIndex(2)"
+                index="2" label="Black and white"
+                openedSource="{LeftPanelAssets.IMG_BLACK_WHITE_OPENED}"
+                closedSource="{LeftPanelAssets.IMG_BLACK_WHITE}"/>
+
+        <component:LPItemContainer
+                width="100%"
+                click="updateSelectedIndex(3)"
+                index="3" label="Black and white"
+                openedSource="{LeftPanelAssets.IMG_BLACK_WHITE_OPENED}"
+                closedSource="{LeftPanelAssets.IMG_BLACK_WHITE}"/>
+    </s:VGroup>
+
+</component:BaseLPContainer>
