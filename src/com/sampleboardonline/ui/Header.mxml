@@ -12,7 +12,8 @@
               verticalAlign="middle" horizontalAlign="left">
 
         <s:Image source="{HeaderAssets.IMG_LOGO}" verticalCenter="0"/>
-        <s:Button styleName="newBoardButton" buttonMode="true"/>
+        <s:Button styleName="newBoardButton" buttonMode="true"
+                    click="createNewProjectHandler(event)"/>
         <s:Button styleName="openButton" buttonMode="true"/>
         <s:Button styleName="saveButton" buttonMode="true"/>
         <s:Button styleName="saveAsButton" buttonMode="true"/>
@@ -23,5 +24,21 @@
 
     <fx:Script><![CDATA[
         import assets.header.HeaderAssets;
+
+        import com.sampleboardonline.model.enum.ItemTypeEnum;
+
+        import com.sampleboardonline.model.models.MainModel;
+        import com.sampleboardonline.model.vo.CanvasItemVO;
+        import com.sampleboardonline.model.vo.PageVO;
+        import com.sampleboardonline.model.vo.ProjectVO;
+
+        private function createNewProjectHandler(event:MouseEvent):void {
+            var project:ProjectVO = new ProjectVO("AAAAA");
+            project.page = new PageVO("AA",800,600);
+            var item:CanvasItemVO = new CanvasItemVO("AAAA112",ItemTypeEnum.IMAGE);
+            item.imagePath = "http://img.autobytel.com/car-reviews/autobytel/11694-good-looking-sports-cars/2016-Ford-Mustang-GT-burnout-red-tire-smoke.jpg";
+            project.items.addItem(item);
+            MainModel.instance.projectVO = project;
+        }
         ]]></fx:Script>
 </s:Group>

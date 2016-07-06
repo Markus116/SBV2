@@ -11,5 +11,6 @@
 
     <s:HSlider width="200" verticalCenter="0" left="10"
                stepSize="0.1"
-               minimum="0.5" maximum="1.5" value="@{MainModel.instance.projectZoom}"/>
+               minimum="1" maximum="2"
+               value="@{MainModel.instance.projectZoom}"/>
 </s:Group>

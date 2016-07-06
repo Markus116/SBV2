@@ -4,25 +4,13 @@
         xmlns:canvasrenderer="com.sampleboardonline.ui.renderer.canvasRenderer.*"
         xmlns:s="library://ns.adobe.com/flex/spark">
 
-    <fx:Script><![CDATA[
-        private function onComplete(event:Event):void {
-            if(itemVO.imageGeometry.width * itemVO.imageGeometry.height == 0){
-                var scale:Number = Math.min(300/image.sourceWidth,300/image.sourceHeight);
-                data.canvasGeometry.width = data.imageGeometry.width = image.sourceWidth*scale;
-                data.canvasGeometry.height = data.imageGeometry.height = image.sourceHeight*scale;
-            }
-        }
-    ]]></fx:Script>
-
     <s:Image
             id="image"
-            complete="onComplete(event)"
-            ready="onComplete(event)"
             source="{itemVO.source}"
             smoothingQuality="high" smooth="true"
-            width="{itemVO.imageGeometry.width*itemVO.canvasGeometry.scaleX}"
-            height="{itemVO.imageGeometry.height*itemVO.canvasGeometry.scaleY}"
-            x="{itemVO.imageGeometry.x*itemVO.canvasGeometry.scaleX}"
-            y="{itemVO.imageGeometry.y*itemVO.canvasGeometry.scaleY}"/>
+            width="{itemVO.imageGeometry.width}"
+            height="{itemVO.imageGeometry.height}"
+            x="{itemVO.imageGeometry.x}"
+            y="{itemVO.imageGeometry.y}"/>
 
 </canvasrenderer:BaseCanvasRenderer>

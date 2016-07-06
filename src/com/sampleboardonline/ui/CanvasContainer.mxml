@@ -5,6 +5,7 @@
         xmlns:mx="library://ns.adobe.com/flex/mx">
 
         <fx:Script><![CDATA[
+            import com.greensock.events.TransformEvent;
             import com.greensock.transform.TransformItem;
             import com.greensock.transform.TransformManager;
             import com.sampleboardonline.controller.events.BaseEvent;
@@ -36,7 +37,9 @@
             }
 
             public function set projectVO(value:ProjectVO):void {
-                if (_projectVO == value) return;
+                if (_projectVO == value) {
+                    return;
+                }
                 initTransformManager(value);
                 _projectVO = value;
                 dispatchEvent(new Event(PROJECTVO_CHANGED_EVENT));
@@ -49,7 +52,9 @@
             }
 
             public function set zoom(value:Number):void {
-                if (_zoom == value) return;
+                if (_zoom == value) {
+                    return;
+                }
                 _zoom = value;
                 dispatchEvent(new Event(ZOOM_CHANGED_EVENT));
             }
@@ -59,7 +64,7 @@
                     mainModel.transformManager.removeAllItems();
                     mainModel.transformManager.destroy();
                 }
-                if(!_projectVO){
+                if (!_projectVO) {
                     return;
                 }
 
@@ -80,6 +85,13 @@
                 mainModel.transformManager.lineColor = 0x777777;
                 mainModel.transformManager.allowMultiSelect = false;
                 mainModel.transformManager.autoDeselect = false;
+
+                mainModel.transformManager.addEventListener(TransformEvent.FINISH_INTERACTIVE_SCALE,onScaleFinished);
+            }
+
+            private function onScaleFinished(event:TransformEvent):void{
+                var itemVO:CanvasItemVO = event.items[0].targetObject.data as CanvasItemVO;
+                trace("AAAAAA",itemVO.canvasGeometry.scaleX, itemVO.canvasGeometry.width,itemVO.imageGeometry.scaleX, itemVO.imageGeometry.width);
             }
 
             private function itemRendererFunction(item:CanvasItemVO):ClassFactory {
@@ -97,7 +109,8 @@
 
             private function onRendererAdd(event:BaseEvent):void {
                 if (event.data is BaseCanvasRenderer) {
-                    mainModel.transformManager.addItem(DisplayObject(event.data), TransformManager.SCALE_WIDTH_AND_HEIGHT);
+                    var scaleMode:String = event.data is TextItemRenderer ? TransformManager.SCALE_WIDTH_AND_HEIGHT : TransformManager.SCALE_NORMAL;
+                    mainModel.transformManager.addItem(DisplayObject(event.data), scaleMode);
                 }
             }
 
@@ -118,8 +131,7 @@
             visible="{projectVO!=null}"
             width="{projectVO.page.width}"
             height="{projectVO.page.height}"
-            scaleX="{zoom}"
-            scaleY="{zoom}"
+            scaleX="{zoom}" scaleY="{zoom}"
             verticalCenter="0" horizontalCenter="0">
 
         <s:Rect width="100%" height="100%">
@@ -132,7 +144,7 @@
         </s:Rect>
 
 
-        <component:DrawingDataGroup
+        <component:DataGroupCanvas
                 width="100%" height="100%"
                 clipContent="true"
                 holder="{holderGroup}"
@@ -140,9 +152,8 @@
                 childRemoved="onRendererRemove(event)"
                 verticalScrollPolicy="off"
                 horizontalScrollPolicy="off"
-                itemRendererFunction="itemRendererFunction"
                 dataProvider="{mainModel.projectVO.items}">
-        </component:DrawingDataGroup>
+        </component:DataGroupCanvas>
 
         <mx:UIComponent id="holderGroup" width="100%" height="100%"/>
 
